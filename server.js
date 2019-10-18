@@ -127,7 +127,8 @@ const server = new ApolloServer({
         settings: {
             "editor.theme": "light"
         }
-    }
+    },
+    introspection: true
   });
 
 // Start the server
