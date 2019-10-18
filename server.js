@@ -3,29 +3,29 @@ var uuid = require('uuid');
 var faker = require('faker');
 //
 //placeholder profiles
-let profileExamples = [
-    {
-        name: "Matt",
-        lastOnline: "2 hours",
-        distance: '0.6 mi',
-        photo: 'matt.jpg',
-        id: uuid.v4()
-    },
-    {
-        name: "Steven",
-        lastOnline: "6 hours",
-        distance: '4.2 mi',
-        photo: 'steven.jpg',
-        id: uuid.v4()
-    },
-    {
-        name: "Jonathan",
-        lastOnline: "2 days",
-        distance: '.5 mi',
-        photo: 'jon.jpg',
-        id: uuid.v4()
-    }
-];
+// let profileExamples = [
+//     {
+//         name: "Matt",
+//         lastOnline: "2 hours",
+//         distance: '0.6 mi',
+//         photo: 'matt.jpg',
+//         id: uuid.v4()
+//     },
+//     {
+//         name: "Steven",
+//         lastOnline: "6 hours",
+//         distance: '4.2 mi',
+//         photo: 'steven.jpg',
+//         id: uuid.v4()
+//     },
+//     {
+//         name: "Jonathan",
+//         lastOnline: "2 days",
+//         distance: '.5 mi',
+//         photo: 'jon.jpg',
+//         id: uuid.v4()
+//     }
+// ];
 
 //array containing profiles (will be in redux state in future)
 let profiles = []
@@ -42,6 +42,7 @@ for (let i = 0; i < 40; i++) {
     fakeProfile.lastOnline = Math.floor(Math.random() * 6 + 1) + ' days';
     fakeProfile.distance = Math.floor(Math.random() * 15 + 1) + ' mi';
     fakeProfile.photo = faker.image.avatar();
+    fakeProfile.id = uuidv.v4();
     profiles.push(fakeProfile);
 }
 
