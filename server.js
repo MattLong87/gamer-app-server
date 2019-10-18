@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer, gql} = require('apollo-server');
 var uuid = require('uuid');
 //
 //placeholder profiles
@@ -122,10 +122,15 @@ const resolvers = {
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    introspection: true,
-    playground: true
-})
+    playground: {
+        endpoint: '/graphql',
+        settings: {
+            "editor.theme": "light"
+        }
+    }
+  });
 
+// Start the server
 server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
   });
