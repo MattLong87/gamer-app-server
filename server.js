@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
 var uuid = require('uuid');
-import faker from 'faker';
+var faker = require('faker');
 //
 //placeholder profiles
 let profileExamples = [
