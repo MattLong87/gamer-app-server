@@ -1,5 +1,6 @@
-const { ApolloServer, gql} = require('apollo-server');
+const { ApolloServer, gql } = require('apollo-server');
 var uuid = require('uuid');
+import faker from 'faker';
 //
 //placeholder profiles
 let profileExamples = [
@@ -30,19 +31,28 @@ let profileExamples = [
 let profiles = []
 
 //randomly picks from placeholder profiles to fill the profiles array
+// for (let i = 0; i < 40; i++) {
+//     let randomNumber = Math.floor(Math.random() * profileExamples.length);
+//     profiles.push(profileExamples[randomNumber]);
+// }
+
 for (let i = 0; i < 40; i++) {
-    let randomNumber = Math.floor(Math.random() * profileExamples.length);
-    profiles.push(profileExamples[randomNumber]);
+    let fakeProfile = {};
+    fakeProfile.name = faker.name.firstName();
+    fakeProfile.lastOnline = Math.floor(Math.random() * 6 + 1) + ' days';
+    fakeProfile.distance = Math.floor(Math.random() * 15 + 1) + ' mi';
+    fakeProfile.photo = faker.image.avatar();
+    profiles.push(fakeProfile);
 }
 
 let conversations = [
     {
-        messages: [{content: "Hello", sender: "Matt"}],
+        messages: [{ content: "Hello", sender: "Matt" }],
         memberIDs: [1, 2],
         id: uuid.v4()
     },
     {
-        messages: [{content: "hey there", sender: "Jon"}, {content: "test message", sender: "Steven"}],
+        messages: [{ content: "hey there", sender: "Jon" }, { content: "test message", sender: "Steven" }],
         memberIDs: [0, 2],
         id: uuid.v4()
     }
@@ -107,15 +117,15 @@ const resolvers = {
 
     Mutation: {
         createConversation: (root, args) => {
-          const conversation = { memberIDs: [args.id1, args.id2], messages: [], id: uuid.v4() };
-          conversations = conversations.concat(conversation);
-          return conversation;
+            const conversation = { memberIDs: [args.id1, args.id2], messages: [], id: uuid.v4() };
+            conversations = conversations.concat(conversation);
+            return conversation;
         },
         addMessageToConversation: (root, args) => {
             const conversation = conversations.find(conversation => conversation.id === args.conversationID);
-            conversation.messages.push({content: args.content, sender: args.senderID, id: uuid.v4()});
+            conversation.messages.push({ content: args.content, sender: args.senderID, id: uuid.v4() });
             return conversation;
-          }
+        }
     }
 }
 
@@ -129,9 +139,9 @@ const server = new ApolloServer({
         }
     },
     introspection: true
-  });
+});
 
 // Start the server
 server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
-  });
+});
