@@ -43,6 +43,9 @@ for (let i = 0; i < 40; i++) {
     fakeProfile.distance = Math.floor(Math.random() * 15 + 1) + ' mi';
     fakeProfile.photo = faker.image.avatar();
     fakeProfile.id = uuid.v4();
+    fakeProfile.aboutMe = "This is just a test profile, this area will contain information about the user!";
+    fakeProfile.favoriteGames = "Puerto Rico, \nSettlers of Catan, \nFood Chain Magnate, \nGloomhaven, \nMage Knight";
+    fakeProfile.wantToPlay = "I would like to find a group to play cooperative games with!"
     profiles.push(fakeProfile);
 }
 
@@ -64,7 +67,10 @@ const typeDefs = gql`
     name: String!
     lastOnline: String!
     distance: String!
-    photo: String! 
+    photo: String!
+    aboutMe: String
+    favoriteGames: String
+    wantToPlay: String
     id: ID!
   }
 
