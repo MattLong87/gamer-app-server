@@ -42,7 +42,7 @@ for (let i = 0; i < 40; i++) {
     fakeProfile.lastOnline = Math.floor(Math.random() * 6 + 1) + ' days';
     fakeProfile.distance = Math.floor(Math.random() * 15 + 1) + ' mi';
     fakeProfile.photo = faker.image.avatar();
-    fakeProfile.id = uuidv.v4();
+    fakeProfile.id = uuid.v4();
     profiles.push(fakeProfile);
 }
 
