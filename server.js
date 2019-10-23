@@ -56,6 +56,11 @@ let conversations = [
         id: uuid.v4()
     },
     {
+        messages: [{ content: "Hello 2", sender: "Matt" }, {content: "Hello again", sender: "Jon"}],
+        members: [profiles[1], profiles[2]],
+        id: uuid.v4()
+    },
+    {
         messages: [{ content: "hey there", sender: "Jon" }, { content: "test message", sender: "Steven" }],
         members: [profiles[3], profiles[4]],
         id: uuid.v4()
@@ -94,23 +99,24 @@ const typeDefs = gql`
     allPersons: [Person!]!
     findPersonByName(name: String!): Person
     findPersonByID(id: String!): Person
-    findConversationBetweenTwoPeople(id1: Int, id2: Int): Conversation
-    findConversationsByMemberID(id: String!): Conversation
+    findConversationBetweenTwoPeople(id1: String, id2: String): Conversation
+    findConversationsByMemberID(id: ID!): [Conversation]
   }
 
   type Mutation {
       createConversation(
-          id1: Int!
+          id1: String!
           id2: Int!
-      ): Conversation
+      ): String
       addMessageToConversation(
-          conversationID: Int!
+          conversationID: String!
           content: String!
-          senderID: Int!
+          senderID: String!
       ): Conversation
   }
 `
-console.log(profiles);
+console.log(profiles[1].id);
+console.log(conversations[1].members[0]);
 
 const resolvers = {
     Query: {
@@ -121,7 +127,7 @@ const resolvers = {
         findPersonByID: (root, args) =>
             profiles.find(p => p.id === args.id),
         findConversationsByMemberID: (root, args) =>
-            conversations.find(conversation => conversation.members[1].id == args.id1 || conversation.members[2].id == args.id2)
+            conversations.filter(conversation => conversation.members[0].id == args.id || conversation.members[1].id == args.id)
         //findConversationBetweenTwoPeople: (root, args) =>
             //conversations.find(conversation => conversation.memberIDs.includes(args.id1) && conversation.memberIDs.includes(args.id2))
     },
