@@ -52,12 +52,12 @@ for (let i = 0; i < 40; i++) {
 let conversations = [
     {
         messages: [{ content: "Hello", sender: "Matt" }],
-        memberIDs: [1, 2],
+        members: [profiles[1], profiles[2]],
         id: uuid.v4()
     },
     {
         messages: [{ content: "hey there", sender: "Jon" }, { content: "test message", sender: "Steven" }],
-        memberIDs: [0, 2],
+        members: [profiles[3], profiles[4]],
         id: uuid.v4()
     }
 ];
@@ -84,7 +84,7 @@ const typeDefs = gql`
   type Conversation {
     id: ID!
     messages: [Message]!
-    memberIDs: [String!]!
+    members: [Person]!
     createdAt: String
     updatedAt: String
   } 
@@ -95,6 +95,7 @@ const typeDefs = gql`
     findPersonByName(name: String!): Person
     findPersonByID(id: String!): Person
     findConversationBetweenTwoPeople(id1: Int, id2: Int): Conversation
+    findConversationsByMemberID(id: String!): Conversation
   }
 
   type Mutation {
@@ -109,6 +110,7 @@ const typeDefs = gql`
       ): Conversation
   }
 `
+console.log(profiles);
 
 const resolvers = {
     Query: {
@@ -118,8 +120,10 @@ const resolvers = {
             profiles.find(p => p.name === args.name),
         findPersonByID: (root, args) =>
             profiles.find(p => p.id === args.id),
-        findConversationBetweenTwoPeople: (root, args) =>
-            conversations.find(conversation => conversation.memberIDs.includes(args.id1) && conversation.memberIDs.includes(args.id2))
+        findConversationsByMemberID: (root, args) =>
+            conversations.find(conversation => conversation.members[1].id == args.id1 || conversation.members[2].id == args.id2)
+        //findConversationBetweenTwoPeople: (root, args) =>
+            //conversations.find(conversation => conversation.memberIDs.includes(args.id1) && conversation.memberIDs.includes(args.id2))
     },
 
     Mutation: {
